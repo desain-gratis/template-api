@@ -1,0 +1,5 @@
+{
+    "service.socket.read-timeout-seconds": 10,
+    "service.socket.write-timeout-seconds": 10,
+    "service.socket.address": "localhost:9001"
+}
