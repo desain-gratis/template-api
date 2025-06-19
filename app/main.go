@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -30,7 +31,10 @@ func main() {
 	flag.Parse()
 
 	// init config
-	initConfig(ctx, jsonConfigPath)
+	err := initConfig(ctx, jsonConfigPath)
+	if err != nil {
+		log.Fatal().Msgf("failed to init config: %v", err)
+	}
 	CONFIG.SetString("service.socket.address", socketAddress)
 
 	address := CONFIG.GetString("service.socket.address")
@@ -81,5 +85,5 @@ func main() {
 
 func Empty(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(""))
+	_, _ = fmt.Fprintf(w, "")
 }
